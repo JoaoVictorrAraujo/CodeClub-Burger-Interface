@@ -10,7 +10,7 @@ export const Container = styled.div`
     align-items: center;
 `
 
-export const LoginImage = styled.img`
+export const RegisterImage = styled.img`
  height: 70%;
 `
 

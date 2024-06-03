@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import api from '../../services/api'
 
 import Button from "../../components/Button";
-import LoginImg from '../../assets/Login_Image.png'
+import RegisterImg from '../../assets/burgerImage.png'
 import LogoImg from '../../assets/logo.png'
 import {
   Container,
@@ -13,11 +13,11 @@ import {
   Label,
   Input,
   SignInLink,
-  LoginImage,
+  RegisterImage,
   ErrorMessage
 } from './styles'
 
-function Login() {
+function Register() {
   const schema = Yup.object().shape({
     email: Yup.string().email('Digite um e-mail válido').required('O e-mail é obrigatório'),
     password: Yup.string().required('A senha é obrigatória').min(6, 'A senha deve ter pelo menos 6 digitos')
@@ -39,7 +39,7 @@ function Login() {
 
   return (
     <Container>
-      <LoginImage src={LoginImg} alt='login-image' />
+      <RegisterImage src={RegisterImg} alt='register-image' />
       <ContainerItens>
         <img src={LogoImg} alt='logo-image' />
         <h1>Login</h1>
