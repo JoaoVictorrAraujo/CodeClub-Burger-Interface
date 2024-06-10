@@ -19,8 +19,10 @@ import {
 
 function Register() {
   const schema = Yup.object().shape({
+    name: Yup.string().required('O seu nome é obrigatório'),
     email: Yup.string().email('Digite um e-mail válido').required('O e-mail é obrigatório'),
-    password: Yup.string().required('A senha é obrigatória').min(6, 'A senha deve ter pelo menos 6 digitos')
+    password: Yup.string().required('A senha é obrigatória').min(6, 'A senha deve ter pelo menos 6 digitos'),
+    confirmPassword: Yup.string().required('A senha é obrigatória').oneOf([Yup.ref('password')], 'As senhas devem ser iguais')
   })
 
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) })
@@ -29,8 +31,8 @@ function Register() {
 
   const onSubmit = async clientData => {
 
-    const response = await api.post('sessions', {
-
+    const response = await api.post('users', {
+      name: clientData.name,
       email: clientData.email,
       password: clientData.password
     })
@@ -42,9 +44,13 @@ function Register() {
       <RegisterImage src={RegisterImg} alt='register-image' />
       <ContainerItens>
         <img src={LogoImg} alt='logo-image' />
-        <h1>Login</h1>
+        <h1>Cadastre-se</h1>
 
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
+        <Label>Nome</Label>
+          <Input type="text" {...register("name")} error={errors.name?.message}></Input>
+          <ErrorMessage>{errors.name?.message}</ErrorMessage>
+
           <Label>Email</Label>
           <Input type="email" {...register("email")} error={errors.email?.message}></Input>
           <ErrorMessage>{errors.email?.message}</ErrorMessage>
@@ -52,12 +58,17 @@ function Register() {
           <Label>Senha</Label>
           <Input type="password" {...register("password")} error={errors.password?.message}></Input>
           <ErrorMessage>{errors.password?.message}</ErrorMessage>
-          <Button type="submit" style={{ marginTop:75, marginBottom:25}}>Sign In</Button>
+
+          <Label>Confirmar Senha</Label>
+          <Input type="password" {...register("confirmPassword")} error={errors.confirmPassword?.message}></Input>
+          <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
+
+          <Button type="submit" style={{ marginTop:25, marginBottom:25}}>Sign Up</Button>
         </form>
-        <SignInLink>Não possui conta ? <a>Sign Up</a></SignInLink>
+        <SignInLink>Já possui conta ? <a>Sign In</a></SignInLink>
       </ContainerItens>
     </Container>
   )
 }
 
-export default Login;
+export default Register;

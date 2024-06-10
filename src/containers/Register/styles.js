@@ -34,7 +34,7 @@ export const ContainerItens = styled.div`
     line-height: 28px;
     color:#fff;
     text-align: center;
-    margin-top: 100px;
+    margin-top: 10px;
 }
     form{
         display: flex;
