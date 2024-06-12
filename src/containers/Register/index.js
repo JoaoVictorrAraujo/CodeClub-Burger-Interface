@@ -16,6 +16,7 @@ import {
   RegisterImage,
   ErrorMessage
 } from './styles'
+import { toast } from "react-toastify";
 
 function Register() {
   const schema = Yup.object().shape({
@@ -31,12 +32,26 @@ function Register() {
 
   const onSubmit = async clientData => {
 
-    const response = await api.post('users', {
-      name: clientData.name,
-      email: clientData.email,
-      password: clientData.password
-    })
-    console.log(response)
+    try {
+      const { status } = await api.post('users', {
+        name: clientData.name,
+        email: clientData.email,
+        password: clientData.password
+      }, { validateStatus: () => true })
+
+      if (status == 201 || status == 200) { 
+        toast.success('Cadastro criado com sucesso  ') 
+      }else if (status ==409){
+        toast.error('E-mail já cadastrado! Faça login para continuar')
+      }else {
+        throw new Error()
+      }
+
+    } catch (err) {
+      toast.error("Falha no sistema tente novamente")
+    }
+
+
   }
 
   return (
@@ -47,7 +62,7 @@ function Register() {
         <h1>Cadastre-se</h1>
 
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
-        <Label>Nome</Label>
+          <Label>Nome</Label>
           <Input type="text" {...register("name")} error={errors.name?.message}></Input>
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
 
@@ -63,7 +78,7 @@ function Register() {
           <Input type="password" {...register("confirmPassword")} error={errors.confirmPassword?.message}></Input>
           <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
 
-          <Button type="submit" style={{ marginTop:25, marginBottom:25}}>Sign Up</Button>
+          <Button type="submit" style={{ marginTop: 25, marginBottom: 25 }}>Sign Up</Button>
         </form>
         <SignInLink>Já possui conta ? <a>Sign In</a></SignInLink>
       </ContainerItens>
