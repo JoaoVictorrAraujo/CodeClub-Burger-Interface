@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-
+import {Link} from 'react-router-dom'
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from 'yup'
 import { useUser } from "../../hooks/UserContext";
@@ -67,7 +67,7 @@ const {putUserData} = useUser()
           <ErrorMessage>{errors.password?.message}</ErrorMessage>
           <Button type="submit" style={{ marginTop:75, marginBottom:25}}>Sign In</Button>
         </form>
-        <SignInLink>Não possui conta ? <a>Sign Up</a></SignInLink>
+        <SignInLink>Não possui conta ? <Link style={{color:'white'}}  to="/cadastro">Sign Up</Link></SignInLink>
       </ContainerItens>
     </Container>
   )

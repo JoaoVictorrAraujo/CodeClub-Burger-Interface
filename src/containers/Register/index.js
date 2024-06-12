@@ -17,6 +17,7 @@ import {
   ErrorMessage
 } from './styles'
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom"
 
 function Register() {
   const schema = Yup.object().shape({
@@ -80,7 +81,7 @@ function Register() {
 
           <Button type="submit" style={{ marginTop: 25, marginBottom: 25 }}>Sign Up</Button>
         </form>
-        <SignInLink>Já possui conta ? <a>Sign In</a></SignInLink>
+        <SignInLink>Já possui conta ? < Link style={{color:'white'}}  to="/login">Sign In</ Link></SignInLink>
       </ContainerItens>
     </Container>
   )
