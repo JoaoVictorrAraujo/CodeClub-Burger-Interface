@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from 'yup'
 import api from '../../services/api'
 
-import Button from "../../components/Button";
+import {Button} from "../../components";
 import RegisterImg from '../../assets/burgerImage.png'
 import LogoImg from '../../assets/logo.png'
 import {
@@ -19,7 +19,7 @@ import {
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom"
 
-function Register() {
+export function Register() {
   const schema = Yup.object().shape({
     name: Yup.string().required('O seu nome é obrigatório'),
     email: Yup.string().email('Digite um e-mail válido').required('O e-mail é obrigatório'),
@@ -87,4 +87,3 @@ function Register() {
   )
 }
 
-export default Register;

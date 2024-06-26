@@ -8,7 +8,7 @@ import { useUser } from "../../hooks/UserContext";
 
 import api from '../../services/api'
 
-import Button from "../../components/Button";
+import {Button} from "../../components";
 import LoginImg from '../../assets/Login_Image.png'
 import LogoImg from '../../assets/logo.png'
 import {
@@ -21,7 +21,7 @@ import {
   ErrorMessage
 } from './styles'
 
-function Login() {
+export function Login() {
   const history = useHistory()
 const {putUserData} = useUser()
 
@@ -79,4 +79,4 @@ setTimeout(() => {
   )
 }
 
-export default Login;
+

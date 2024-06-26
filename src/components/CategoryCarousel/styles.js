@@ -16,7 +16,7 @@ export const Container = styled.div`
 .rec.rec-arrow:hover{
     border: 2px solid #9758a6;
     background-color: #EFEFEF;
-    color: #9758a6
+    color: #9758a6;
 }
 .rec.rec-arrow:disabled{
     border: none;
