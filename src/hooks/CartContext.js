@@ -1,41 +1,56 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'  
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 import PropTypes from 'prop-types'
 const CartContext = createContext({})
 
-export const CartProvider = ({children}) =>{
- const [cartProducts, setCartProducts] = useState({})
+export const CartProvider = ({ children }) => {
+    const [cartProducts, setCartProducts] = useState([])
 
- const putProductInCart = async product =>{
-    
- }
- useEffect( ()=> {
- const loadUserData = async()=>{
-    const clientCartData = await localStorage.getItem('codeburger:cartInfo')
+    const putProductInCart = async product => {
+        const cartIndex = cartProducts.findIndex(prd => prd.id === product.id)
+        let newCartProducts = []
+        if (cartIndex >= 0) {
+            newCartProducts = cartProducts
 
-    if(clientInfo){
-        setCartProducts(JSON.parse(clientCartData))
+            newCartProducts[cartIndex].quantity = newCartProducts[cartIndex].quantity + 1
+
+            setCartProducts(newCartProducts)
+        } else {
+            product.quantity = 1
+            newCartProducts = [...cartProducts, product]
+            setCartProducts(newCartProducts)
+        }
+        await localStorage.setItem('codeburger:cartInfo', JSON.stringify(newCartProducts))
     }
-    
- }
- loadUserData()
- },[])
+    useEffect(() => {
+        const loadUserData = async () => {
+            const clientCartData = await localStorage.getItem('codeburger:cartInfo')
+
+            if (clientCartData) {
+                setCartProducts(JSON.parse(clientCartData))
+            }
+
+        }
+        loadUserData()
+    }, [])
 
 
-    return(
-        <CartContext.Provider value={{putProductInCart,cartProducts}}> {children} </CartContext.Provider>
+    return (
+        <CartContext.Provider value={{ putProductInCart, cartProducts }}>
+            {children}
+        </CartContext.Provider>
     )
 }
 
-    export const useCart = () =>{
-        const context = useContext(CartContext)
+export const useCart = () => {
+    const context = useContext(CartContext)
 
-        if(!context){
-            throw new Error("useCart must be used with UserContext")
-        }
-        return context
+    if (!context) {
+        throw new Error("useCart must be used with UserContext")
     }
+    return context
+}
 
-    CartProvider.PropTypes = {
-        children: PropTypes.node
-    }
+CartProvider.PropTypes = {
+    children: PropTypes.node
+}
